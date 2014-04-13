@@ -19,14 +19,13 @@ public class Problem24 {
 		
 		// create test permutation array
 		Permutation perm = new Permutation();
-		char[] array = {'0','1','2'};
+		char[] array = {'0','1','2','3','4','5','6','7','8','9'};
 		perm.createArray(array);
 		System.out.println(array);
-		perm.nextPermutation();
-		System.out.println(array);
-		perm.nextPermutation();
-		System.out.println(array);
-		
+		for (int i = 0; i < 999999; i++) {
+			perm.narayanaNextPerm();
+		}
+		System.out.println(array);			
 	}
 
 }
