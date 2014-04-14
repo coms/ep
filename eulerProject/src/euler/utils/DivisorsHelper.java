@@ -1,9 +1,9 @@
-package main;
+package euler.utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MathUtils {
+public class DivisorsHelper {
 
 	/**
 	 * return list of divisors of N
