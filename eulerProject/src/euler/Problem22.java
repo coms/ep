@@ -17,7 +17,7 @@ public class Problem22 {
 		
 		try {
 			ArrayList<String> names = new ArrayList<String>();
-			BufferedReader reader = new BufferedReader( new FileReader(new File("names.txt")));
+			BufferedReader reader = new BufferedReader( new FileReader(new File("data/names.txt")));
 			String str = reader.readLine();
 			String[] namesArray = str.split(",");
 			for (String rawName : namesArray) {
