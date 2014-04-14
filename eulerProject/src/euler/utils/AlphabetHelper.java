@@ -30,8 +30,20 @@ public class AlphabetHelper {
 	 * Y -25
 	 * Z -26
 	 */
-	public int charIndex(char c) {
+	public static int charIndex(char c) {
 		return c - 64;
 	}
 	
+	/**
+	 * Return weight of string based on char index
+	 * @param str
+	 * @return
+	 */
+	public static long score(String str) {
+		long retval = 0;
+		for (int i=0; i < str.length(); i++) {
+			retval += charIndex(str.charAt(i));
+		}
+		return retval;
+	}
 }
