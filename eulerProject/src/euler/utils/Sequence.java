@@ -1,22 +1,24 @@
 package euler.utils;
 
+import java.util.List;
+
 /*
  * Class represent sequence.
  */
 public class Sequence {
 
-	private Integer pos = null;
+	private List<Integer> pos = null;
 	
 	private Integer size = null;
 	
-	private String squence = null;
+	private String sequence = null;
 
-	public String getSquence() {
-		return squence;
+	public String getSequence() {
+		return sequence;
 	}
 
-	public void setSquence(String squence) {
-		this.squence = squence;
+	public void setSequence(String sequence) {
+		this.sequence = sequence;
 	}
 
 	public Integer getSize() {
@@ -27,18 +29,18 @@ public class Sequence {
 		this.size = size;
 	}
 
-	public Integer getPos() {
-		return pos;
+	public void setPos(List<Integer> pos) {
+		this.pos = pos;
 	}
 
-	public void setPos(Integer pos) {
-		this.pos = pos;
+	public List<Integer> getPos() {
+		return pos;
 	}
 
 	@Override
 	public String toString() {
-		return "Sequence [pos=" + pos + ", size=" + size + ", squence="
-				+ squence + "]";
+		return "Sequence [pos=" + pos + ", size=" + size + ", sequence="
+				+ sequence + "]";
 	}
 	
 }
