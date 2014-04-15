@@ -1,5 +1,6 @@
 package euler.utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -12,6 +13,21 @@ public class Sequence {
 	private Integer size = null;
 	
 	private String sequence = null;
+	
+	public Sequence(List<Integer> pos, Integer size, String sequence) {
+		super();
+		this.pos = pos;
+		this.size = size;
+		this.sequence = sequence;
+	}
+
+	public Sequence(Integer pos, Integer size, String sequence) {
+		super();
+		this.pos = new ArrayList<Integer>();
+		this.pos.add(pos);
+		this.size = size;
+		this.sequence = sequence;
+	}
 
 	public String getSequence() {
 		return sequence;
@@ -36,6 +52,11 @@ public class Sequence {
 	public List<Integer> getPos() {
 		return pos;
 	}
+
+	public void addPosition(Integer pos) {
+		this.pos.add(pos);
+	}
+
 
 	@Override
 	public String toString() {
