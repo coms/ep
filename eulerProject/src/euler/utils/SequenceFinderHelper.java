@@ -50,9 +50,14 @@ public class SequenceFinderHelper {
 
 	private static boolean isSuperString(Map<String, Sequence> seqns, String pattern) {
 		for (String key : seqns.keySet()) {
-			if (pattern.startsWith(key)) {
-				return true;
+			int size = key.length(); 
+			for (int i = 0; i < pattern.length() - size; i += size) { 
+				String substr = pattern.substring(i, i) + size;
+				if (!substr.equals(key)) {
+					return false;
+				}
 			}
+			return true;
 		}
 		return false;
 	}
