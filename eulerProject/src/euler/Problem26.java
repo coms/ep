@@ -14,11 +14,12 @@ public class Problem26 {
 		
 		Integer maxD = 1;
 		Integer maxSize = 1;
-		for (int d = 857; d < 858; d++) {
+		for (int d = 3; d < 100; d++) {
+//		for (int d = 7; d < 8; d++) {
 			BigDecimal a = BigDecimal.ONE.divide(new BigDecimal(d), 2000, BigDecimal.ROUND_CEILING);
-			System.out.print("1 / " + d + " = " + a );
+			System.out.println("1 / " + d + " = " + a );
 			List<Sequence> sqns = SequenceFinderHelper.findSequences(a.toPlainString());
-			System.out.println(sqns);
+//			System.out.println(sqns);
 			Integer size = 0;
 			for (Sequence sq : sqns) {
 				size = Math.max(size, sq.getSize());	

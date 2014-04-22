@@ -51,13 +51,14 @@ public class SequenceFinderHelper {
 	private static boolean isSuperString(Map<String, Sequence> seqns, String pattern) {
 		for (String key : seqns.keySet()) {
 			int size = key.length(); 
-			for (int i = 0; i < pattern.length() - size; i += size) { 
-				String substr = pattern.substring(i, i) + size;
-				if (!substr.equals(key)) {
-					return false;
+			// if one of seq keys can be applied to pattern twice from start is superstring
+			if (pattern.length() >= size *2) {
+				String sub1 = pattern.substring(0, size);
+				String sub2 = pattern.substring(size, size * 2);
+				if (sub1.equals(key) && sub2.equals(key)) {
+					return true;
 				}
 			}
-			return true;
 		}
 		return false;
 	}
