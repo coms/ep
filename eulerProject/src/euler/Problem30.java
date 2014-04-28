@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
+import euler.utils.Combination;
 import euler.utils.DigitUtil;
 import euler.utils.Matrix;
 import euler.utils.PrimeNumberUtils;
@@ -15,19 +16,20 @@ import euler.utils.SequenceFinderHelper;
 public class Problem30 {
 
 	public static void main(String[] args) {
-		Long s = 0L;
-		for (Long i = 2L; i < 10000000L; i++) {
-			Long[] a = DigitUtil.longToDigits(i);
-			Long sum = 0L;
-			for (Long l : a) {
-				sum = sum + (long) Math.pow(l, 5);
-			}
-			if (sum.equals(i)) {
-				s += sum;
-				System.out.println(i + " = " + sum);
-			}
+		Combination comb = new Combination(8);
+		comb.setValues(1L, 2L, 5L, 10L, 20L, 50L, 100L, 200L);
+//		for (int i = 0; i < 300000; i++) {
+//			comb.setRandomValues();				
+//			if (comb.sum().equals(200L)) {
+//				comb.sort();
+//				comb.addFounded(comb.getCoins());
+//			}
+//		}
+		comb.resetCounter();
+		for (int i = 0; i < 63; i++) {
+			comb.incrementCounter();			
 		}
-		System.out.println("sum = " + s);
+		System.out.println("sum = " + comb.getCoins());
 	}
 
 }
