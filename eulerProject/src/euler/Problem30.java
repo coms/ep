@@ -18,15 +18,8 @@ public class Problem30 {
 	public static void main(String[] args) {
 		Combination comb = new Combination(8);
 		comb.setValues(1L, 2L, 5L, 10L, 20L, 50L, 100L, 200L);
-//		for (int i = 0; i < 300000; i++) {
-//			comb.setRandomValues();				
-//			if (comb.sum().equals(200L)) {
-//				comb.sort();
-//				comb.addFounded(comb.getCoins());
-//			}
-//		}
 		comb.resetCounter();
-		for (int i = 0; i < 63; i++) {
+		for (int i = 0; i < 127; i++) {
 			comb.incrementCounter();			
 		}
 		System.out.println("sum = " + comb.getCoins());

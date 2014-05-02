@@ -57,24 +57,22 @@ public class Combination {
 		Collections.fill(counters, 0L);
 	}
 	
+	private void inc(int pos) {
+		Long val = counters.get(pos);
+		if (val == (values.size() - 1)) {
+			inc(pos + 1);
+			counters.set(pos, 0L);
+		} else {
+			counters.set(pos, val + 1L);
+		}
+	}
+	
 	public List<Long> incrementCounter() {
 		int i = 0;
 		int pos = 0;
 		int maxI = values.size() - 1;
 		// cycle there
-		Long v = counters.get(pos);
-		if (v == maxI) {
-			this.counters.set(pos, 0L);
-			Long v2 = counters.get(++pos);
-			this.counters.set(pos, ++v2);			
-		} else {
-			this.counters.set(pos, ++v);
-			if (v2 == maxI) {
-				this.counters.set(pos, 0L);
-				Long v3 = counters.get(++pos);
-				this.counters.set(pos, ++v3);				
-			}
-		}
+		inc(pos);
 		synchronizeCoins();
 		return coins;
 	}
