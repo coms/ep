@@ -89,7 +89,15 @@ public class Combination {
 	
 	public List<Long> getCoins() {
 		return coins;
-	}	
+	}
+	
+	public String getHash() {
+		StringBuilder retval = new StringBuilder();
+		for (int i = 0; i < this.values.size(); i++) {
+			
+		}
+		return retval.toString();
+	}
 	
 	public Long sum() {
 		Long retval = 0L;

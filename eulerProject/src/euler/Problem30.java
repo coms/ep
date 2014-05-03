@@ -1,28 +1,24 @@
 package euler;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-
-import euler.utils.Combination;
-import euler.utils.DigitUtil;
-import euler.utils.Matrix;
-import euler.utils.PrimeNumberUtils;
-import euler.utils.Sequence;
-import euler.utils.SequenceFinderHelper;
+import euler.utils.Equation;
 
 public class Problem30 {
 
 	public static void main(String[] args) {
-		Combination comb = new Combination(8);
-		comb.setValues(1L, 2L, 5L, 10L, 20L, 50L, 100L, 200L);
-		comb.resetCounter();
-		for (int i = 0; i < 127; i++) {
-			comb.incrementCounter();			
+		Equation eq = new Equation(200, 200, 100, 50, 20, 10, 5, 2, 1);
+		int i = 1;
+		try {
+		for (i =  1; i < 100000; i++) {
+				eq.nextRoot();
+				if (i % 10000 == 0) {
+					System.out.println(i);
+				}
+			//System.out.println("x[" + i + "] = " + Arrays.toString(eq.nextRoot()));
 		}
-		System.out.println("sum = " + comb.getCoins());
+		} catch (Exception e) {
+			System.out.println(e);
+			System.out.println(i - 1);
+		}
 	}
 
 }
