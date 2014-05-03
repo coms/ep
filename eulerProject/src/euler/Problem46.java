@@ -16,9 +16,8 @@ public class Problem46 {
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
 	
 	public static void main(String[] args) {
-		long max = 0;
 		long k = 0;
-		for (int n = 1; n < 100000; n = n + 2) {
+		for (int n = 2; n < 100000; n = n + 2) {
 			if (++k % 10000 == 0) {
 				System.out.println(sdf.format(new Date()) + " : " + n);
 			}
