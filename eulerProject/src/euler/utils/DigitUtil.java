@@ -1,5 +1,7 @@
 package euler.utils;
 
+import java.math.BigInteger;
+
 public class DigitUtil {
 
 	public static Long[] longToDigits(Long n) {
@@ -43,5 +45,22 @@ public class DigitUtil {
 		}
 		return true;
 	}
+	
+	public static int rotateLeft(int n) {
+		int[] a = intToDigits(n);
+		int k = a[0]; 
+		for (int i = 0; i < a.length - 1; i++) {
+			a[i] = a[i + 1];
+		}
+		a[a.length - 1] = k;
+		return digitArrayToInt(a);
+	}
 
+	public static int digitArrayToInt(int[] a) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < a.length; i++) {
+			sb.append(a[i]);
+		}
+		return Integer.valueOf(sb.toString());
+	}
 }

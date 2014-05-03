@@ -14,4 +14,19 @@ public class PrimeNumberUtils {
 		return divs.size() == 2;
 	}
 	
+	public static boolean isCircularPrime(int n) {
+		if (!isPrime(n) || String.valueOf(n).contains("0")) {
+			return false;
+		}
+		int size = DigitUtil.intToDigits(n).length;
+		for (int i = 0; i < size; i++) {
+			n = DigitUtil.rotateLeft(n);
+			if (!isPrime(n)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	
 }
