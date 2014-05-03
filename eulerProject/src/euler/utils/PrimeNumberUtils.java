@@ -9,6 +9,21 @@ import java.util.List;
  */
 public class PrimeNumberUtils {
 
+	private static long lastPrime = 0L;
+	
+	public static void resetPrimeSequnce() {
+		lastPrime = 0L;
+	}
+	
+	public static long nextPrime() {
+		long n = lastPrime;
+		do {
+			n++;
+		} while (!isPrime(n));
+		lastPrime = n;
+		return lastPrime;
+	}
+
 	public static boolean isPrime(long n) {
 		List<Long> divs = DivisorsHelper.divisors(n);
 		return divs.size() == 2;
