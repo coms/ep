@@ -7,7 +7,7 @@ import euler.utils.PrimeNumberUtils;
 /**
  * 
  */
-public class Problem38 {
+public class Problem46 {
 
 	public static void main(String[] args) {
 		long max = 0;
