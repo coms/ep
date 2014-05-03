@@ -21,5 +21,27 @@ public class DigitUtil {
 		}
 		return retval;
 	}
+	
+	// pandigital is number with digits from 1 to n;
+	// 34512 - pandigital to 5;
+	public static boolean isPandigital(int n, int pan) {
+		String s = String.valueOf(n);
+		return isPandigital(s, pan);
+	}
+
+	// pandigital is number with digits from 1 to n;
+	// 34512 - pandigital to 5;
+	public static boolean isPandigital(String s, int pan) {
+		if (s.indexOf("0") != -1) {
+			return false;
+		}
+		for (int i = 1; i <= pan; i++) {
+			String c = String.valueOf(i);
+			if ((s.indexOf(c) == -1) || (s.indexOf(c) != s.lastIndexOf(c))) {
+				return false;
+			}
+		}
+		return true;
+	}
 
 }
