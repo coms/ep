@@ -37,4 +37,8 @@ public class MathHelper {
 		return b;
 	}
 	
+	public static boolean isInteger(double n) {
+		return (n == (long) n);
+	}
+	
 }

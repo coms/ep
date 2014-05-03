@@ -30,7 +30,7 @@ public class Problem46 {
 				long prime = PrimeNumberUtils.nextPrime(); 
 				while (prime < n) {
 					double sq = Math.sqrt((n - prime) / 2d);
-					if (sq == (int)sq) {
+					if (sq == (int)sq) { // check if sq in integer
 						if ((prime + 2*sq*sq) == n) {
 //							System.out.println(n + " = " + prime + " + " + "2 * " + sq + "^2");
 							isSolved = true;
