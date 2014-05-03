@@ -11,5 +11,15 @@ public class DigitUtil {
 		}
 		return retval;
 	}
-	
+
+	public static int[] intToDigits(int n) {
+		String s = String.valueOf(n);
+		int size = s.length();
+		int[] retval = new int[size];
+		for (int i = 0; i < size; i++) {
+			retval[i] = Integer.parseInt(String.valueOf(s.charAt(i)));
+		}
+		return retval;
+	}
+
 }

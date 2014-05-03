@@ -1,12 +1,6 @@
 package euler;
 
-import java.math.BigDecimal;
-import java.util.List;
-
 import euler.utils.Matrix;
-import euler.utils.PrimeNumberUtils;
-import euler.utils.Sequence;
-import euler.utils.SequenceFinderHelper;
 
 public class Problem27 {
 
