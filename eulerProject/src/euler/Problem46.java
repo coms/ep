@@ -17,9 +17,9 @@ public class Problem46 {
 	
 	public static void main(String[] args) {
 		long k = 0;
-		for (int n = 2; n < 100000; n = n + 2) {
-			if (++k % 10000 == 0) {
-				System.out.println(sdf.format(new Date()) + " : " + n);
+		for (int n = 3; n < 100000; n = n + 2) {
+			if (++k % 1000 == 0) {
+				System.out.println(sdf.format(new Date()) + " : " + n + " numbers processed");
 			}
 			if (PrimeNumberUtils.isPrime(n)) {
 				continue;
