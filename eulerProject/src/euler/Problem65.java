@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import euler.utils.ArraysHelper;
 import euler.utils.DigitUtil;
 import euler.utils.E;
 import euler.utils.Fraction;
@@ -27,6 +28,6 @@ public class Problem65 {
 				"721687998492614384364344789144430684808846256124649473601");
 		BigInteger bi3 = bi1.add(bi2);
 		System.out.println(bi3);
-		System.out.println(DigitUtil.sum(DigitUtil.bigIntegerToDigits(bi3)));
+		System.out.println(ArraysHelper.sum(DigitUtil.bigIntegerToDigits(bi3)));
 	}
 }
