@@ -33,20 +33,7 @@ public class DigitUtil {
 		}
 		return retval;
 	}
-	
-	/**
-	 * sum of array elements
-	 * @param a
-	 * @return
-	 */
-	public static int sum(int[] a) {
-		int retval = 0;
-		for (int i : a) {
-			retval += i;
-		}
-		return retval;
-	}
-	
+		
 	// pandigital is number with digits from 1 to n;
 	// 34512 - pandigital to 5;
 	public static boolean isPandigital(int n, int pan) {

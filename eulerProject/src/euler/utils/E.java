@@ -33,9 +33,6 @@ public class E {
 	}
 	
 	public static int getDenom(int n) {
-//		if (n == 1) {
-//			return 2;
-//		}
 		if (n % 3 == 0) {
 			return n / 3 * 2;
 		} else {
