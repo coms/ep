@@ -1,5 +1,9 @@
 package euler.utils;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 public class ArraysHelper {
 
 	/**
@@ -14,5 +18,15 @@ public class ArraysHelper {
 		}
 		return retval;
 	}
+	
+	public static Set<String> sort(Set<String> set) {
+		Set<String> retval = new HashSet<String>();
+		String[] oset = set.toArray(new String[0]);
+		Arrays.sort(oset);
+		System.out.println(Arrays.toString(oset));
+		retval.addAll(Arrays.asList(oset));
+		return retval;
+	}
+	
 
 }
