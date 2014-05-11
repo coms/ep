@@ -4,7 +4,7 @@ import java.math.BigInteger;
 
 public class DigitUtil {
 
-	public static Long[] longToDigits(Long n) {
+	public static Long[] toDigits(Long n) {
 		String s = String.valueOf(n);
 		int size = s.length();
 		Long[] retval = new Long[size];
