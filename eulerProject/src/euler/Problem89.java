@@ -6,9 +6,15 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
+
+import org.javatuples.Pair;
 
 import euler.utils.ArraysHelper;
 
@@ -39,51 +45,64 @@ import euler.utils.ArraysHelper;
 public class Problem89 {
 
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+	private static HashMap<String, String> substMap = new HashMap<String, String>();
+	
+	static {
+		substMap.put("IIII", "IV");
+		substMap.put("VIV", "IX");
+		substMap.put("XXXX", "XL");
+		substMap.put("LXL", "XC");
+		substMap.put("CCCC", "CD");
+		substMap.put("DCD", "CM");
+		
+		substMap.put("VV", "X");
+		substMap.put("LL", "C");
+		substMap.put("DD", "M");
+
+		substMap.put("IIIII", "V");
+		substMap.put("XXXXX", "L");
+		substMap.put("CCCCC", "D");
+		
+		//substMap.put("VIII", "IIX");
+	}
 	
 	public static void main(String[] args) {
 		try {
-			Set<String> codes = new HashSet<String>();
-			Set<String> sortedCodes = new ConcurrentSkipListSet<String>();
-			BufferedReader reader = new BufferedReader( new FileReader(new File("data/keylog.txt")));
+			ArrayList<Pair<String, String>> numbers = new ArrayList<Pair<String, String>>();
+//			Set<String> sortedCodes = new ConcurrentSkipListSet<String>();
+			BufferedReader reader = new BufferedReader( new FileReader(new File("data/roman.txt")));
 			String str;
 			while ((str = reader.readLine()) != null) {
-				codes.add(str);
+				numbers.add(Pair.with(str, str));
 			}
-			sortedCodes = ArraysHelper.sort(codes);			
-			long sum = 0l;
-			
-			String s = "73162890";
-			
-			boolean check = checkPattern(s, sortedCodes);
-			
-			System.out.println(check);
-			
+			int totalSavedChars = 0;
+			int lineNumber = 1;
+			for (Pair<String, String> n : numbers) {
+				boolean subst = false;
+				do {
+					subst = false;
+					for (Map.Entry<String, String> substEntry : substMap.entrySet()) {
+						int idx = n.getValue1().indexOf(substEntry.getKey());
+						if (idx >= 0) {
+							System.out.println("make subst : " + substEntry + " on " + n);
+							String val = n.getValue1();
+							val = val.replaceAll(substEntry.getKey(), substEntry.getValue());
+							Pair<String, String> np = n.setAt1(val);
+							n = np;
+							subst = true;
+						}
+					}
+				} while (subst);
+				int savedChars = n.getValue0().length() - n.getValue1().length();
+				totalSavedChars += savedChars;
+				System.out.println(lineNumber++ + " : " + n + " : saved : " + savedChars);
+			}
+			System.out.println("total saved : " + totalSavedChars);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}		
-	}
-	
-	
-	/***
-	 * Checks String s on patterns.
-	 * @param s
-	 * @param patterns
-	 * @return
-	 */
-	public static boolean checkPattern(String s, Set<String> patterns) {
-		for (String pattern : patterns) {
-			char s1 = pattern.charAt(0);
-			char s2 = pattern.charAt(1);
-			char s3 = pattern.charAt(2);
-			String p = "\\d*" + s1 + "\\d*" + s2 + "\\d*" + s3 + "\\d*";
-			if (!s.matches(p)) {
-				System.out.println(s + " is not match " + p);
-				return false;
-			}
-		}
-		return true;
 	}
 	
 }
