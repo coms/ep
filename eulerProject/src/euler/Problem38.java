@@ -1,7 +1,7 @@
 package euler;
 
 import euler.utils.DigitUtil;
-import euler.utils.PrimeNumberUtils;
+import euler.utils.Prime;
 
 
 /**

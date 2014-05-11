@@ -5,7 +5,7 @@ import java.util.Date;
 
 import euler.utils.DigitUtil;
 import euler.utils.PowHelper;
-import euler.utils.PrimeNumberUtils;
+import euler.utils.Prime;
 
 
 /**
@@ -21,12 +21,12 @@ public class Problem46 {
 			if (++k % 1000 == 0) {
 				System.out.println(sdf.format(new Date()) + " : " + n + " numbers processed");
 			}
-			if (PrimeNumberUtils.isPrime(n)) {
+			if (Prime.isPrime(n)) {
 				continue;
 			}
 			boolean isSolved = false;
-				PrimeNumberUtils.resetPrimeSequnce();
-				long prime = PrimeNumberUtils.nextPrime(); 
+				Prime.resetPrimeSequnce();
+				long prime = Prime.nextPrime(); 
 				while (prime < n) {
 					double sq = Math.sqrt((n - prime) / 2d);
 					if (sq == (int)sq) { // check if sq in integer
@@ -35,7 +35,7 @@ public class Problem46 {
 							isSolved = true;
 						}
 					}
-					prime = PrimeNumberUtils.nextPrime();
+					prime = Prime.nextPrime();
 				}
 			if (!isSolved) {
 				System.out.println("Cannot find solution for " + n + "!!!");

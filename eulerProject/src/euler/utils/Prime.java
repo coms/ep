@@ -7,7 +7,7 @@ import java.util.List;
  * @author coms
  *
  */
-public class PrimeNumberUtils {
+public class Prime {
 
 	private static long lastPrime = 0L;
 	

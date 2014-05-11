@@ -9,7 +9,7 @@ import euler.utils.DigitUtil;
 import euler.utils.E;
 import euler.utils.Fraction;
 import euler.utils.PowHelper;
-import euler.utils.PrimeNumberUtils;
+import euler.utils.Prime;
 
 
 /**

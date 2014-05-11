@@ -3,7 +3,7 @@ package euler;
 import java.math.BigDecimal;
 import java.util.List;
 
-import euler.utils.PrimeNumberUtils;
+import euler.utils.Prime;
 import euler.utils.Sequence;
 import euler.utils.SequenceFinderHelper;
 
@@ -13,7 +13,7 @@ public class Problem26 {
 		Integer maxD = 1;
 		Integer maxSize = 1;
 		for (int d = 2; d < 1000; d++) {
-			if (!PrimeNumberUtils.isPrime(d)) {
+			if (!Prime.isPrime(d)) {
 				continue;
 			}
 			BigDecimal a = BigDecimal.ONE.divide(new BigDecimal(d), 2000, BigDecimal.ROUND_DOWN);
