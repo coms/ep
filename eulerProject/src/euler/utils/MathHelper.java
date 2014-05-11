@@ -40,5 +40,10 @@ public class MathHelper {
 	public static boolean isInteger(double n) {
 		return (n == (long) n);
 	}
-	
+
+	public static String toBinary(long n) {
+		BigInteger bin = new BigInteger(String.valueOf(n));
+		return bin.toString(2);
+	}
+
 }

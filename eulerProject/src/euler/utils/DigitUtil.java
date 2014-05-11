@@ -73,4 +73,18 @@ public class DigitUtil {
 		}
 		return Integer.valueOf(sb.toString());
 	}
+	
+	public static boolean isPalindromic(long n) {
+		String s = String.valueOf(n);
+		StringBuilder sb = new StringBuilder(s);
+		sb.reverse();
+		return s.equals(sb.toString());
+	}
+	
+	public static boolean isPalindromic(String s) {
+		StringBuilder sb = new StringBuilder(s);
+		sb.reverse();
+		return s.equals(sb.toString());
+	}
+
 }
