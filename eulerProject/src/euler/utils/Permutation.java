@@ -16,7 +16,7 @@ public class Permutation {
 	}
 	
 	public String getArray() {
-		return array.toString();
+		return String.valueOf(array);
 	}
 	
 	public void nextPermutation() {
@@ -35,14 +35,19 @@ public class Permutation {
 		}
 	}
 	
+	
+	/**
+	 * return Null then no other permutation can be created.
+	 * @return
+	 */
 	public char[] narayanaNextPerm () {
 	    int i, k, t;
 	    char tmp;
 	 
-	    //иру 1
+	    //Step 1
 	    for (k = n - 2; (k >= 0) && (array[k] >= array[k + 1]); k--);
 	 
-	    //иру 2
+	    //Step 2
 	    if (k == -1)
 	        return null;
 	 
@@ -52,7 +57,7 @@ public class Permutation {
 	    array[k] = array[t];
 	    array[t] = tmp;
 	 
-	    //иру 3
+	    //Step 3
 	    for (i = k + 1; i <= (n + k)/2; i++)
 	    {
 	        t = n + k - i;

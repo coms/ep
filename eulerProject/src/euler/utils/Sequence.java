@@ -14,6 +14,14 @@ public class Sequence {
 	
 	private String sequence = null;
 	
+	public static boolean isArithmeticSequence(List<Long> sq) {
+		if (sq.size() < 3) {
+			return false;
+		}
+		long diff = sq.get(1) - sq.get(0);
+		return diff == (sq.get(2) - sq.get(1));
+	}
+	
 	public Sequence(List<Integer> pos, Integer size, String sequence) {
 		super();
 		this.pos = pos;
