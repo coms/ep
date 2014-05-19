@@ -16,8 +16,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 
-import org.javatuples.Pair;
-
 import euler.utils.ArraysHelper;
 import euler.utils.DigitUtil;
 import euler.utils.MathHelper;
@@ -51,39 +49,35 @@ public class Problem64 {
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
 
 	public static void main(String[] args) {
-		int s = 0;
-		for (long n = 1000; n < 10_000; n++) {
-			boolean isPrime = Prime.isPrime(n);
-//			System.out.println( n + " isPrime : " + isPrime);
-			if (isPrime) {
-				// prepare array of permutated values
-				List<Long> list = new ArrayList<Long>();  
-				Permutation perm = new Permutation();
-				list.add(n);
-				perm.createArray(String.valueOf(n).toCharArray());
-				String st = null;
-				while (perm.narayanaNextPerm() != null) {
-					st = perm.getArray();
-					long l = Long.valueOf(st);
-					if (Prime.isPrime(l)) {
-						list.add(l);
+		int oddPeriods = 0;
+		for (long n = 2; n <= 200; n++) {
+			if (!MathHelper.isInteger(Math.sqrt(n))) {
+				System.out.print("sqrt(" + n + ") = [");				
+				double x = Math.sqrt(n);
+				long a = Double.valueOf(x).longValue();
+				long a0 = Double.valueOf(x).longValue();
+				System.out.print(a0 + ";(");
+//				System.out.println(" a0 = " + a0 + " x = " + x);
+				int i = 0;
+				boolean isFirst = true;
+				long a1 = 0;
+				while (a != a0 * 2) {
+					i++;
+					x = 1 / (x - a);
+					a = Double.valueOf(x).longValue();
+					if (isFirst) {
+						a1 = a;
 					}
+//					System.out.println(" i = " + i + " x = " + x + " a = " + a);
+					System.out.print(a + ",");
 				}
-				for (int i = 0; i < list.size() - 2; i ++) {
-					for (int j = i + 1; j < list.size() - 1; j ++) {				
-						for (int k = j + 1; k < list.size(); k ++) {
-							List<Long> seq = new ArrayList<Long>();
-							seq.add(list.get(i));
-							seq.add(list.get(j));
-							seq.add(list.get(k));
-							boolean isSequence = Sequence.isArithmeticSequence(seq);
-							if (isSequence) {
-								System.out.println(seq + " is arithm. progression : " + isSequence);
-							}
-						}
-					}
+				System.out.println(")]");
+				System.out.println(" n :" + n + " period : " + i);
+				if (i % 2 == 1) {
+					oddPeriods++;
 				}
 			}
 		}
+		System.out.println("odd periods : " + oddPeriods);
 	}
 }
