@@ -46,15 +46,18 @@ public class Problem100 {
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
 
 	private static int scale = 200;
+	private static MathContext mc2 = new MathContext(scale/2, RoundingMode.HALF_UP);
 	
 	private static BigDecimal total2;
 
 	public static void main(String[] args) {
 		int oddPeriods = 0;
-		MathContext mc = new MathContext(scale);
-		BigDecimal n = new BigDecimal("1000000000000");
+		MathContext mc = new MathContext(scale, RoundingMode.FLOOR);
+//		BigDecimal n = new BigDecimal("1000000000000");
+		BigDecimal n = new BigDecimal("5000");
 		total2 = n.subtract(BigDecimal.ONE);
 		BigDecimal p = new BigDecimal("0.5");
+		BigDecimal prec = new BigDecimal("0.0000000000000000000001");
 		BigSquareRoot bsr = new BigSquareRoot();
 		bsr.setScale(scale);
 		BigDecimal sq = bsr.get(p);
@@ -62,23 +65,35 @@ public class Problem100 {
 //		BigDecimal startNumber = sq.multiply(n).setScale(0, RoundingMode.FLOOR);
 		BigDecimal startNumber = new BigDecimal(sq.multiply(n).longValue());
 		System.out.println("sqrt(n) * p = " + startNumber);
-		for (int i = 0; i< 10; i++) {
-			System.out.println(getProb(n, startNumber).equals(p));
-			startNumber = startNumber.add(BigDecimal.ONE);
+		for (int i = 0; i < 20000000; i++) {
+			BigDecimal prob = getProb(n, startNumber);
+			if (i % 10000 == 0) {
+				System.out.println("total = " + n + " blue = " + startNumber  + ", prob = " + prob);
+			}
+			if (prob.subtract(p).abs().compareTo(prec) <= 0) {
+				System.out.println("SOLUTION : total = " + n + ", blue = " + startNumber);
+				break;
+			}
+//			System.out.println(prob);
+			if (prob.compareTo(p) > 0) {
+				n = n.add(BigDecimal.ONE);
+				total2 = n.subtract(BigDecimal.ONE);
+				startNumber = new BigDecimal(n.multiply(sq, mc).longValue());		
+			} else {
+				startNumber = startNumber.add(BigDecimal.ONE);
+			}
 		}
-//		while (!getProb(n, startNumber).equals(p)) {
-//		}
 	}
 	
 	public static BigDecimal getProb(BigDecimal total, BigDecimal blue) {
-		System.out.println("total = " + total + ", blue = " + blue);
+//		System.out.println("total = " + total + " total2 = " + total2 + ", blue = " + blue);
 		BigDecimal p1 = blue.divide(total, scale, RoundingMode.FLOOR);
 //		System.out.println("p1 = " + p1);
 		BigDecimal b2 = blue.subtract(BigDecimal.ONE);
 //		System.out.println("b2 = " + b2);
 		BigDecimal p2 = b2.divide(total2, scale, RoundingMode.FLOOR);
 		BigDecimal p = p1.multiply(p2); 
-		System.out.println("p = " + p);
+//		System.out.println("p = " + p);
 		return p;
 	}
 }
