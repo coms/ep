@@ -172,8 +172,11 @@ public class BigSquareRoot {
 
 		// Build an array of test numbers
 
-		String testNums[] = { "9", "30", "720", "1024", n.toString() };
+//		String testNums[] = { "9", "30", "720", "1024", n.toString() };
+		String testNums[] = { "9", "30", "720", "1024", "139" };
 
+		app.setScale(50);
+		
 		for (int i = 0; i < testNums.length; i++) {
 			n = new BigInteger(testNums[i]);
 			if (i > 0) {
@@ -181,10 +184,10 @@ public class BigSquareRoot {
 			}
 			System.out.println("Computing the square root of");
 			System.out.println(n.toString());
-			int length = n.toString().length();
-			if (length > 20) {
-				app.setScale(length / 2);
-			}
+//			int length = n.toString().length();
+//			if (length > 20) {
+//				app.setScale(length / 2);
+//			}
 			sqrt = app.get(n);
 			System.out.println("Iterations " + app.getIterations());
 			System.out.println("Sqrt " + sqrt.toString());
