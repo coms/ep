@@ -5,9 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,6 +17,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 
+import org.javatuples.Pair;
+
+import sun.security.util.BigInt;
 import euler.utils.ArraysHelper;
 import euler.utils.DigitUtil;
 import euler.utils.MathHelper;
@@ -45,48 +46,45 @@ The first ten continued fraction representations of (irrational) square roots ar
 √13=[3;(1,1,1,1,6)], period=5
 Exactly four continued fractions, for N ≤ 13, have an odd period.
 How many continued fractions for N ≤ 10000 have an odd period?
+
+
+Stuck on 94?
 **/
 
-public class Problem64 {
+public class Problem64_ {
 
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
 
 	public static void main(String[] args) {
-		int oddPeriods = 0;
-		MathContext mc = new MathContext(40);
-		for (long n = 1; n <= 20; n++) {
+		int s = 0;
+		for (long n = 108; n <= 109; n++) {
+			long startTime = System.currentTimeMillis();
 			if (!MathHelper.isInteger(Math.sqrt(n))) {
-				System.out.print("sqrt(" + n + ") = [");				
-				BigDecimal x = BigDecimal.valueOf(Math.sqrt(n));
-				long a0 = Double.valueOf(x.doubleValue()).longValue();
-				long a = a0;
-				System.out.print(a0 + ";(");
-//				System.out.println(" a0 = " + a0 + " x = " + x);
-				int i = 0;
-				boolean isFirst = true;
-				long a1 = 0;
-				BigDecimal one = BigDecimal.ONE.setScale(30); 
-				while (a != a0 * 2) {
-					i++;
-					BigDecimal bdA = BigDecimal.valueOf(a);
-					bdA.setScale(30);
-					BigDecimal diff = x.subtract(bdA, mc); 
-//					System.out.println("diff = " + diff);
-					x = one.divide(diff, mc);
-					a = x.longValue();
-//					if (isFirst) {
-//						a1 = a;
+				long y = 0;
+				while (true) {
+					// solve sq eq  
+					y++;
+//					System.out.println("y = " + y);
+					BigInteger k1 = BigInteger.valueOf(y);
+					BigInteger k = k1.multiply(k1).multiply(BigInteger.valueOf(n));
+					BigInteger x1 = k.add(BigInteger.ONE);
+					BigInteger x2 = k.subtract(BigInteger.ONE);
+//					System.out.println("x1 = " + x1 + " sqrt : " + MathHelper.isPerfectSquare(x1));
+//					System.out.println("x2 = " + x2 + " sqrt : " + MathHelper.isPerfectSquare(x2));
+//					if (MathHelper.isPerfectSquare(x1)) {
+//						long stopTime = System.currentTimeMillis();
+//						System.out.println("n = " + n + "; +1; y = " + y + "; time : " + (stopTime - startTime)/1000 + " sec" );
+//						break;
 //					}
-//					System.out.println(" i = " + i + " x = " + x + " a = " + a);
-					System.out.print(a + ",");
-				}
-				System.out.println(")]");
-				System.out.println(" n :" + n + " period : " + i);
-				if (i % 2 == 1) {
-					oddPeriods++;
+//					if (MathHelper.isPerfectSquare(x2)) {
+//						long stopTime = System.currentTimeMillis();
+//						s++;
+//						System.out.println("n = " + n + "; -1; y = " + y + "; s = " + s+ "; time : " + (stopTime - startTime)/1000 + " sec" );
+//						break;
+//					}
 				}
 			}
 		}
-		System.out.println("odd periods : " + oddPeriods);
+		System.out.println("n with odd period : " + s);
 	}
 }
