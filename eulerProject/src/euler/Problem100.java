@@ -21,43 +21,44 @@ public class Problem100 {
 
 	static MathContext itgr = new MathContext(0, RoundingMode.FLOOR);
 	static BigDecimal total = new BigDecimal("21");
+	static BigDecimal limit = new BigDecimal("1000000000000");
 	static BigDecimal blue = new BigDecimal("15");
-	static BigDecimal sqrt = new BigDecimal(Math.sqrt(2));
+	static BigDecimal addTotal = new BigDecimal("12"); // magic numbers
+	static BigDecimal addBlue = new BigDecimal("8"); // magic numbers
 	static BigDecimal prob = prob(total, blue);
 	static BigDecimal k = new BigDecimal(120d/21d);
 	static int scale = 50;
 		
 	public static void main(String[] args) {
+		long startTime = System.currentTimeMillis();
 		System.out.println("Solve problem 100");
 		System.out.println("total = " + total + ", blue = " + blue + ", prob = " + prob + ", k = " + k);
 		BigDecimal nextTotal = total.multiply(k, itgr).setScale(0, RoundingMode.DOWN);
 		BigDecimal nextBlue = blue.multiply(k, itgr).setScale(0, RoundingMode.DOWN);
 		BigDecimal two = new BigDecimal(2);
-		for (long i = 0; i < 1000L; i++) {
+		do {
 			prob = prob(nextTotal, nextBlue);
-//			System.out.println("nextTotal = " + nextTotal + ", nextBlue = " + nextBlue + ", prob = " + prob + ", k = " + k);
 			if (prob.compareTo(two) == 0) {
 				System.out.println("--- We found next solution!");
-				System.out.println("[found values] nextTotal = " + nextTotal + ", nextBlue = " + nextBlue + ", prob = " + prob + ", k = " + k + ", i= " + i);
-//				System.out.println("total = " + total + ", blue = " + blue);
+				System.out.println("[found values] nextTotal = " + nextTotal + ", nextBlue = " + nextBlue + ", k = " + k);
 				k = nextTotal.divide(total, scale, RoundingMode.DOWN);
-//				System.out.println("new K = " + k);
 				total = new BigDecimal(nextTotal.toString());
 				blue = new BigDecimal(nextBlue.toString());
-				nextTotal = nextTotal.multiply(k, itgr).setScale(0, RoundingMode.DOWN);
-				nextBlue = nextBlue.multiply(k, itgr).setScale(0, RoundingMode.DOWN);
-				System.out.println("[probable values] nextTotal = " + nextTotal + ", nextBlue = " + nextBlue + ", prob = " + prob + ", k = " + k + ", i= " + i);
+				nextTotal = nextTotal.multiply(k, itgr).add(addTotal).setScale(0, RoundingMode.DOWN);
+				nextBlue = nextBlue.multiply(k, itgr).add(addBlue).setScale(0, RoundingMode.DOWN);
+				System.out.println("[probable values] nextTotal = " + nextTotal + ", nextBlue = " + nextBlue + ", k = " + k);
 			} else if (prob.compareTo(two) > 0) {
 				nextBlue = nextBlue.add(BigDecimal.ONE);
 			} else if (prob.compareTo(two) < 0) {
 				nextTotal = nextTotal.add(BigDecimal.ONE);
 			}
-		}
+		} while(total.compareTo(limit) < 0);
+		System.out.println("Elapsed time : " + (System.currentTimeMillis() - startTime) + " ms ");
 	}
 
 	private static BigDecimal prob(BigDecimal total, BigDecimal blue) {
 		BigDecimal p = total.multiply(total.subtract(BigDecimal.ONE));
 		BigDecimal q = blue.multiply(blue.subtract(BigDecimal.ONE));
-		return p.divide(q, 50, RoundingMode.FLOOR);
+		return p.divide(q, scale, RoundingMode.FLOOR);
 	}
 }
