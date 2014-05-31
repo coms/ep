@@ -1,5 +1,6 @@
 package euler.utils;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,16 @@ public class MathHelper {
 	public static String toBinary(long n) {
 		BigInteger bin = new BigInteger(String.valueOf(n));
 		return bin.toString(2);
+	}
+	
+	/**
+	 * Checks two BigDecimal with given precision - number of nulls after point. 
+	 * 
+	 * @return
+	 */
+	public static boolean isEqual(BigDecimal n1, BigDecimal n2, int precision) {
+		BigDecimal alpha = BigDecimal.ONE.movePointLeft(precision); 
+		return n1.subtract(n2).abs().compareTo(alpha) <= 0 ;
 	}
 
 }
