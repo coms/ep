@@ -1,32 +1,8 @@
 package euler;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentSkipListSet;
-
-import euler.utils.ArraysHelper;
-import euler.utils.BigSquareRoot;
-import euler.utils.DigitUtil;
-import euler.utils.MathHelper;
-import euler.utils.Permutation;
-import euler.utils.Prime;
-import euler.utils.Sequence;
 
 /**
 Arranged probability
@@ -43,57 +19,47 @@ the box would contain.
 
 public class Problem100 {
 
-	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
-
-	private static int scale = 200;
-	private static MathContext mc2 = new MathContext(scale/2, RoundingMode.HALF_UP);
-	
-	private static BigDecimal total2;
-
+	static MathContext itgr = new MathContext(0, RoundingMode.FLOOR);
+	static BigDecimal total = new BigDecimal("21");
+	static BigDecimal limit = new BigDecimal("1000000000000");
+	static BigDecimal blue = new BigDecimal("15");
+	static BigDecimal addTotal = new BigDecimal("12"); // magic numbers
+	static BigDecimal addBlue = new BigDecimal("8"); // magic numbers
+	static BigDecimal prob = prob(total, blue);
+	static BigDecimal k = new BigDecimal(120d/21d);
+	static int scale = 50;
+		
 	public static void main(String[] args) {
-		int oddPeriods = 0;
-		MathContext mc = new MathContext(scale, RoundingMode.FLOOR);
-//		BigDecimal n = new BigDecimal("1000000000000");
-		BigDecimal n = new BigDecimal("5000");
-		total2 = n.subtract(BigDecimal.ONE);
-		BigDecimal p = new BigDecimal("0.5");
-		BigDecimal prec = new BigDecimal("0.0000000000000000000001");
-		BigSquareRoot bsr = new BigSquareRoot();
-		bsr.setScale(scale);
-		BigDecimal sq = bsr.get(p);
-		System.out.println("sqrt(n) = " + sq);
-//		BigDecimal startNumber = sq.multiply(n).setScale(0, RoundingMode.FLOOR);
-		BigDecimal startNumber = new BigDecimal(sq.multiply(n).longValue());
-		System.out.println("sqrt(n) * p = " + startNumber);
-		for (int i = 0; i < 20000000; i++) {
-			BigDecimal prob = getProb(n, startNumber);
-			if (i % 10000 == 0) {
-				System.out.println("total = " + n + " blue = " + startNumber  + ", prob = " + prob);
+		long startTime = System.currentTimeMillis();
+		System.out.println("Solve problem 100");
+		System.out.println("total = " + total + ", blue = " + blue + ", prob = " + prob + ", k = " + k);
+		BigDecimal nextTotal = total.multiply(k, itgr).setScale(0, RoundingMode.DOWN);
+		BigDecimal nextBlue = blue.multiply(k, itgr).setScale(0, RoundingMode.DOWN);
+		BigDecimal two = new BigDecimal(2);
+		do {
+			prob = prob(nextTotal, nextBlue);
+			if (prob.compareTo(two) == 0) {
+				System.out.println("--- We found next solution!");
+				System.out.println("[found values] nextTotal = " + nextTotal + ", nextBlue = " + nextBlue + ", k = " + k);
+				k = nextTotal.divide(total, scale, RoundingMode.DOWN);
+				total = new BigDecimal(nextTotal.toString());
+				blue = new BigDecimal(nextBlue.toString());
+				nextTotal = nextTotal.multiply(k, itgr).add(addTotal).setScale(0, RoundingMode.DOWN);
+				nextBlue = nextBlue.multiply(k, itgr).add(addBlue).setScale(0, RoundingMode.DOWN);
+				System.out.println("[probable values] nextTotal = " + nextTotal + ", nextBlue = " + nextBlue + ", k = " + k);
+			} else if (prob.compareTo(two) > 0) {
+				nextBlue = nextBlue.add(BigDecimal.ONE);
+			} else if (prob.compareTo(two) < 0) {
+				nextTotal = nextTotal.add(BigDecimal.ONE);
 			}
-			if (prob.subtract(p).abs().compareTo(prec) <= 0) {
-				System.out.println("SOLUTION : total = " + n + ", blue = " + startNumber);
-				break;
-			}
-//			System.out.println(prob);
-			if (prob.compareTo(p) > 0) {
-				n = n.add(BigDecimal.ONE);
-				total2 = n.subtract(BigDecimal.ONE);
-				startNumber = new BigDecimal(n.multiply(sq, mc).longValue());		
-			} else {
-				startNumber = startNumber.add(BigDecimal.ONE);
-			}
-		}
+		} while(total.compareTo(limit) < 0);
+		System.out.println("Elapsed time : " + (System.currentTimeMillis() - startTime) + " ms ");
 	}
-	
-	public static BigDecimal getProb(BigDecimal total, BigDecimal blue) {
-//		System.out.println("total = " + total + " total2 = " + total2 + ", blue = " + blue);
-		BigDecimal p1 = blue.divide(total, scale, RoundingMode.FLOOR);
-//		System.out.println("p1 = " + p1);
-		BigDecimal b2 = blue.subtract(BigDecimal.ONE);
-//		System.out.println("b2 = " + b2);
-		BigDecimal p2 = b2.divide(total2, scale, RoundingMode.FLOOR);
-		BigDecimal p = p1.multiply(p2); 
-//		System.out.println("p = " + p);
-		return p;
+
+
+	private static BigDecimal prob(BigDecimal total, BigDecimal blue) {
+		BigDecimal p = total.multiply(total.subtract(BigDecimal.ONE));
+		BigDecimal q = blue.multiply(blue.subtract(BigDecimal.ONE));
+		return p.divide(q, scale, RoundingMode.FLOOR);
 	}
 }
