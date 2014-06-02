@@ -3,6 +3,8 @@ package euler;
 import java.math.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.BitSet;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,11 +32,11 @@ public class Problem169 {
 	
 	static BigInteger[] pows = new BigInteger[100];
 	
-	static BigInteger n = BigDecimal.ONE.movePointRight(5).toBigInteger();
+	static BigInteger n = BigDecimal.ONE.movePointRight(1).toBigInteger();
 	
 	static ArrayList<Integer> res = new ArrayList<Integer>();
 	static ArrayList<Integer> base = new ArrayList<Integer>();
-		
+			
 	public static void main(String[] args) {
 		System.out.println("Solve problem 169");
 		for(int i = 0; i < 100; i++) {
@@ -44,36 +46,52 @@ public class Problem169 {
 		String bits = n.toString(2);
 		StringBuilder sb = new StringBuilder(bits).reverse();
 		System.out.println(n + "_2 = " + bits);
-		bits = sb.toString();		
+		bits = sb.toString();
 		for (int i = 0; i < bits.length(); i++) {
 			char ch = bits.charAt(i);
 			if (ch == '1') {
 				base.add(i);
 			}
 		}
-
+		
 		System.out.println("possible combination = ");
 		for (Integer i : base) {
 			System.out.print(" + 2^" + i + " (" + pows[i] + ")");
 		}
 		System.out.println();
-//		int[] intPows = {64, 32, 16, 8, 4, 2, 1};
-		EquationBI e = new EquationBI(n, pows);
-		for (int j = 0; j < 10000; j++) {
-			try {
-				if (j % 1 == 0) {			
-					System.out.println(j);
+		ArrayList<String> bases = splitToBases(bits);
+		System.out.println("bases : " + bases);
+		
+		ArrayList<String> permuted = new ArrayList<String>(bases);
+		for (int i = 0; i < bases.size(); i++) {
+			int j = i;
+			while (permuted.get(j).length() > 1) {
+				String shifted = permuted.get(j).substring(0, permuted.get(j).length() - 1);
+				if (!permuted.contains(shifted)) {
+					permuted.add(j    , shifted);
+					permuted.set(j + 1, shifted);
+					System.out.println(permuted + " i = " + i + " j = " + j);
+				} else {
+					j--;
 				}
-				BigInteger[] nextRoot = e.nextRoot();
-				//if (noMoreThenTwice(Arrays.asList(nextRoot))) {
-	//				System.out.println("!!!" + Arrays.toString(nextRoot));
-				//}
-			} catch (Exception e1) {
-				System.out.println("j = " + j);
-				e1.printStackTrace();
-				break;
+			}
+			permuted = new ArrayList<String>(bases);
+		}
+		
+	}
+	
+	private static ArrayList<String> splitToBases(String bits) {
+		ArrayList<String> retval = new ArrayList<String>();
+		for (int i = 0; i < bits.length(); i++) {
+			if(bits.charAt(i) == '1') {
+				String nulls = "";
+				for (int j = 0; j < i; j++) {
+					nulls += "0";
+				}
+				retval.add("1" + nulls);
 			}
 		}
+		return retval;
 	}
 	
 	private static boolean isNoMoreTwice(List<BigInteger> list) {
@@ -100,6 +118,25 @@ public class Problem169 {
 		}		
 		return true;
 	}	
+
+	
+////	int[] intPows = {64, 32, 16, 8, 4, 2, 1};
+//	EquationBI e = new EquationBI(n, pows);
+//	for (int j = 0; j < 10000; j++) {
+//		try {
+//			if (j % 1 == 0) {			
+//				System.out.println(j);
+//			}
+//			BigInteger[] nextRoot = e.nextRoot();
+//			//if (noMoreThenTwice(Arrays.asList(nextRoot))) {
+////				System.out.println("!!!" + Arrays.toString(nextRoot));
+//			//}
+//		} catch (Exception e1) {
+//			System.out.println("j = " + j);
+//			e1.printStackTrace();
+//			break;
+//		}
+//	}
 
 
 }
