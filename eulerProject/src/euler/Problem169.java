@@ -6,15 +6,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
-
-import euler.geom.Line;
-import euler.geom.Point;
-import euler.utils.BigSquareRoot;
-import euler.utils.Equation;
-import euler.utils.EquationBI;
-import euler.utils.MathHelper;
-
 /**
 * Exploring the number of different ways a number can be expressed as a sum of powers of 2
 * Problem 169
