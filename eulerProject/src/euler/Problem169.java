@@ -30,12 +30,12 @@ public class Problem169 {
 	
 	static BigInteger[] pows = new BigInteger[100];
 	
-	static BigInteger n = BigDecimal.ONE.movePointRight(2).toBigInteger();
+	static BigInteger n = BigDecimal.ONE.movePointRight(5).toBigInteger();
 	
 	static ArrayList<Integer> res = new ArrayList<Integer>();
 	static ArrayList<Integer> base = new ArrayList<Integer>();
 		
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		System.out.println("Solve problem 169");
 		for(int i = 0; i < 100; i++) {
 			pows[i] = BigInteger.ONE.shiftLeft(i);
@@ -60,12 +60,18 @@ public class Problem169 {
 //		int[] intPows = {64, 32, 16, 8, 4, 2, 1};
 		EquationBI e = new EquationBI(n, pows);
 		for (int j = 0; j < 10000; j++) {
-			if (j % 1000 == 0) {			
-				System.out.println(j);
-			}
-			BigInteger[] nextRoot = e.nextRoot();
-			if (noMoreThenTwice(Arrays.asList(nextRoot))) {
-				System.out.println("!!!" + Arrays.toString(nextRoot));
+			try {
+				if (j % 1 == 0) {			
+					System.out.println(j);
+				}
+				BigInteger[] nextRoot = e.nextRoot();
+				//if (noMoreThenTwice(Arrays.asList(nextRoot))) {
+	//				System.out.println("!!!" + Arrays.toString(nextRoot));
+				//}
+			} catch (Exception e1) {
+				System.out.println("j = " + j);
+				e1.printStackTrace();
+				break;
 			}
 		}
 	}

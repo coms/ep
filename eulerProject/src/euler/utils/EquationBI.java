@@ -24,7 +24,8 @@ public class EquationBI {
 		this.xm= new BigInteger[size];
 		Arrays.fill(x, BigInteger.ZERO);
 		for(int i = 0; i < size; i++) {
-			xm[i] = res.divide(k[i]);
+//			xm[i] = res.divide(k[i]);
+			xm[i] = BigInteger.valueOf(2).min(res.divide(k[i])); // stoper for problem 169 no more then twice!!!
 		}
 		
 	}
