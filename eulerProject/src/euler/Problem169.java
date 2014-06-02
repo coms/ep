@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import euler.utils.EquationBI;
+
 /**
 * Exploring the number of different ways a number can be expressed as a sum of powers of 2
 * Problem 169
