@@ -72,12 +72,30 @@ public class Problem169 {
 					permuted.set(j + 1, shifted);
 					System.out.println(permuted + " i = " + i + " j = " + j);
 				} else {
-					j--;
+					if (tailIsSimplest(permuted.subList(0, j+1))) {
+						j++;
+					} else {
+						j--;
+					}
 				}
 			}
 			permuted = new ArrayList<String>(bases);
 		}
 		
+	}
+	
+	private static String getPowAsBits(int n) {
+		return new StringBuilder(pows[n].toString(2)).reverse().toString();
+	}
+	
+	private static boolean tailIsSimplest(List<String> tail) {
+		for (int i = 0; i < tail.size(); i++) {
+			int n = (int) i / 2;
+			if (!getPowAsBits(n).equals(tail.get(i))) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	private static ArrayList<String> splitToBases(String bits) {
