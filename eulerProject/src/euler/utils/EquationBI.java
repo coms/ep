@@ -31,21 +31,25 @@ public class EquationBI {
 	}
 	
 	private void inc(int j) throws Exception {
+//		System.out.println(Arrays.toString(x));
 		BigInteger val = x[j];
 		if (val.equals(xm[j])) {
 			if(j == (size-1)) {
 				throw new Exception("no more roots");
 			}
-			inc(j + 1);
 			x[j] = BigInteger.ZERO;
+			inc(j + 1);
+			p = j;
 		} else {
 			x[j] = x[j].add(BigInteger.ONE);
 		}
 	}
 	
+	private static int p = 0;
+	
 	public BigInteger[] nextRoot() throws Exception {
 		do {
-				inc(0);
+				inc(p);
 		} while (!sum().equals(res));
 		return x;
 	}

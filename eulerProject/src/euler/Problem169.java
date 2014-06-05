@@ -17,13 +17,20 @@ import euler.utils.EquationBI;
 * sum of integer powers of 2 using each power no more than twice.
 *
 * For example, f(10)=5 since there are five different ways to express 10:
+* 2 + 8
+* 2 + 4 + 4
 * 1 + 1 + 8
 * 1 + 1 + 4 + 4
 * 1 + 1 + 2 + 2 + 4
-* 2 + 4 + 4
-* 2 + 8
 * 
 * What is f(10^25)?
+* 
+* 1(1) - 1, :1
+* 10(2) - 10, 1+1, : 2
+* 100(4) - 100, 10+10, 10+1+1, 3
+* 1000(8) - 1000, 100+100, 100+10+10, 100+10+1+1 - 4
+* 10000(16) - 10000, 1000+1000, 1000+100+100, 1000+100+10+10, 1000+100+10+1+1 - 5
+*  
 */
 public class Problem169 {
 	
@@ -32,7 +39,8 @@ public class Problem169 {
 	
 	static BigInteger[] pows = new BigInteger[100];
 	
-	static BigInteger n = BigDecimal.ONE.movePointRight(1).toBigInteger();
+//	static BigInteger n = BigDecimal.ONE.movePointRight(5).toBigInteger();
+	static BigInteger n = BigDecimal.valueOf(10).toBigInteger();
 	
 	static ArrayList<Integer> res = new ArrayList<Integer>();
 	static ArrayList<Integer> base = new ArrayList<Integer>();
@@ -44,8 +52,10 @@ public class Problem169 {
 		}
 		System.out.println(Arrays.toString(pows));
 		String bits = n.toString(2);
+		
 		StringBuilder sb = new StringBuilder(bits).reverse();
 		System.out.println(n + "_2 = " + bits);
+		System.out.println(n + "_3 = " + new StringBuilder(n.toString(3)).reverse());
 		bits = sb.toString();
 		for (int i = 0; i < bits.length(); i++) {
 			char ch = bits.charAt(i);
@@ -62,26 +72,39 @@ public class Problem169 {
 		ArrayList<String> bases = splitToBases(bits);
 		System.out.println("bases : " + bases);
 		
-		ArrayList<String> permuted = new ArrayList<String>(bases);
-		for (int i = 0; i < bases.size(); i++) {
-			int j = i;
-			while (permuted.get(j).length() > 1) {
-				String shifted = permuted.get(j).substring(0, permuted.get(j).length() - 1);
-				if (!permuted.contains(shifted)) {
-					permuted.add(j    , shifted);
-					permuted.set(j + 1, shifted);
-					System.out.println(permuted + " i = " + i + " j = " + j);
-				} else {
-					if (tailIsSimplest(permuted.subList(0, j+1))) {
-						j++;
-					} else {
-						j--;
-					}
-				}
-			}
-			permuted = new ArrayList<String>(bases);
-		}
+//		ArrayList<String> permuted = new ArrayList<String>(bases);
+//		for (int i = 0; i < bases.size(); i++) {
+//			int j = i;
+//			while (permuted.get(j).length() > 1) {
+//				String shifted = permuted.get(j).substring(0, permuted.get(j).length() - 1);
+//				if (!permuted.contains(shifted)) {
+//					permuted.add(j    , shifted);
+//					permuted.set(j + 1, shifted);
+//					System.out.println(permuted + " i = " + i + " j = " + j);
+//				} else {
+//							j--;
+//				}
+//			}
+//			permuted = new ArrayList<String>(bases);
+//		}
 		
+//	int[] intPows = {64, 32, 16, 8, 4, 2, 1};
+	EquationBI e = new EquationBI(n, pows);
+	for (int j = 0; j < 10000; j++) {
+		try {
+			if (j % 1 == 0) {			
+				System.out.println(j);
+			}
+			BigInteger[] nextRoot = e.nextRoot();
+//			//if (noMoreThenTwice(Arrays.asList(nextRoot))) {
+				System.out.println("!!!" + Arrays.toString(nextRoot));
+//			//}
+		} catch (Exception e1) {
+			System.out.println("j = " + j);
+//			e1.printStackTrace();
+			break;
+		}
+	}
 	}
 	
 	private static String getPowAsBits(int n) {
@@ -136,25 +159,5 @@ public class Problem169 {
 		}		
 		return true;
 	}	
-
-	
-////	int[] intPows = {64, 32, 16, 8, 4, 2, 1};
-//	EquationBI e = new EquationBI(n, pows);
-//	for (int j = 0; j < 10000; j++) {
-//		try {
-//			if (j % 1 == 0) {			
-//				System.out.println(j);
-//			}
-//			BigInteger[] nextRoot = e.nextRoot();
-//			//if (noMoreThenTwice(Arrays.asList(nextRoot))) {
-////				System.out.println("!!!" + Arrays.toString(nextRoot));
-//			//}
-//		} catch (Exception e1) {
-//			System.out.println("j = " + j);
-//			e1.printStackTrace();
-//			break;
-//		}
-//	}
-
 
 }
