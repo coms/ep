@@ -1,6 +1,7 @@
 package euler.utils;
 
 import java.math.BigInteger;
+import java.util.Arrays;
 
 public class DigitUtil {
 
@@ -54,6 +55,13 @@ public class DigitUtil {
 
 	// pandigital is number with digits from 1 to n;
 	// 34512 - pandigital to 5;
+	public static boolean isPandigital(long n, int pan) {
+		String s = String.valueOf(n);
+		return isPandigital(s, pan);
+	}
+
+	// pandigital is number with digits from 1 to n;
+	// 34512 - pandigital to 5;
 	public static boolean isPandigital(String s, int pan) {
 		if (s.indexOf("0") != -1) {
 			return false;
@@ -66,7 +74,28 @@ public class DigitUtil {
 		}
 		return true;
 	}
-	
+
+	public static boolean isPandigital(long n) {
+		String s = String.valueOf(n);
+		return isPandigital(s);
+	}
+
+	// pandigital is number with digits from 1 to n;
+	// 34512 - pandigital to 5;
+	public static boolean isPandigital(String s) {
+		if (s.indexOf("0") != -1) {
+			return false;
+		}
+		char[] ca = s.toCharArray();
+		Arrays.sort(ca);
+		for (int i = 0; i < ca.length; i++) {
+			if (Integer.valueOf(String.valueOf(ca[i])) != (i + 1)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	public static int rotateLeft(int n) {
 		int[] a = intToDigits(n);
 		int k = a[0]; 
