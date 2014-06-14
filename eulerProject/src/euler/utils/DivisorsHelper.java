@@ -26,6 +26,25 @@ public class DivisorsHelper {
 	}
 
 	/**
+	 * return list of divisors of N
+	 */
+	public static boolean moreThen2Div(Long n) {
+		if (n == 1) {
+			return true; // hardcode for "1";
+		}
+		long div = 2;
+		long pairedDiv = n / div;
+		while (div <= pairedDiv) {
+			if (n % div == 0  && n != div) {
+				return true;
+			}
+			div++;
+			pairedDiv = n / div;
+		}
+		return false;
+	}
+
+	/**
 	 * return list of proper divisors (div != N) of N
 	 */
 	public static List<Long> properDivisors(Long n) {

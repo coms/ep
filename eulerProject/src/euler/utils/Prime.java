@@ -28,7 +28,11 @@ public class Prime {
 		List<Long> divs = DivisorsHelper.divisors(n);
 		return divs.size() == 2;
 	}
-	
+
+	public static boolean isPrimeFaster(long n) {
+		return !DivisorsHelper.moreThen2Div(n);
+	}
+
 	public static boolean isCircularPrime(int n) {
 		if (!isPrime(n) || String.valueOf(n).contains("0")) {
 			return false;
@@ -42,6 +46,4 @@ public class Prime {
 		}
 		return true;
 	}
-	
-	
 }

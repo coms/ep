@@ -24,6 +24,17 @@ public class DigitUtil {
 		return retval;
 	}
 	
+	public static long[] longToDigits(long n) {
+		String s = String.valueOf(n);
+		int size = s.length();
+		long[] retval = new long[size];
+		for (int i = 0; i < size; i++) {
+			retval[i] = Integer.parseInt(String.valueOf(s.charAt(i)));
+		}
+		return retval;
+	}
+
+	
 	public static int[] bigIntegerToDigits(BigInteger n) {
 		String s = n.toString();
 		int size = s.length();
@@ -73,7 +84,15 @@ public class DigitUtil {
 		}
 		return Integer.valueOf(sb.toString());
 	}
-	
+
+	public static long digitArrayToLong(long[] a) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < a.length; i++) {
+			sb.append(a[i]);
+		}
+		return Long.valueOf(sb.toString());
+	}
+
 	public static boolean isPalindromic(long n) {
 		String s = String.valueOf(n);
 		StringBuilder sb = new StringBuilder(s);
