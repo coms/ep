@@ -60,6 +60,25 @@ public class DigitUtil {
 		return isPandigital(s, pan);
 	}
 
+	// pandigital is number with digits from panBegin to panEnd;
+	// 34512 - pandigital 1 to 5;
+	public static boolean isPandigital(long n, int panBegin, int panEnd) {
+		String s = String.valueOf(n);
+		return isPandigital(s, panBegin, panEnd);
+	}
+
+	// pandigital is number with digits from 1 to n;
+	// 34512 - pandigital to 5;
+	public static boolean isPandigital(String s, int panBegin, int panEnd) {
+		for (int i = panBegin; i <= panEnd; i++) {
+			String c = String.valueOf(i);
+			if ((s.indexOf(c) == -1) || (s.indexOf(c) != s.lastIndexOf(c))) {
+				return false;
+			}
+		}
+		return true;
+	}	
+	
 	// pandigital is number with digits from 1 to n;
 	// 34512 - pandigital to 5;
 	public static boolean isPandigital(String s, int pan) {
@@ -80,8 +99,11 @@ public class DigitUtil {
 		return isPandigital(s);
 	}
 
-	// pandigital is number with digits from 1 to n;
-	// 34512 - pandigital to 5;
+/**
+ * Just pandigital
+ * 12 - true
+ * 987645321 - true
+ */
 	public static boolean isPandigital(String s) {
 		if (s.indexOf("0") != -1) {
 			return false;
