@@ -19,7 +19,7 @@ public class Prime {
 		long n = lastPrime;
 		do {
 			n++;
-		} while (!isPrime(n));
+		} while (!isPrimeFaster(n));
 		lastPrime = n;
 		return lastPrime;
 	}
