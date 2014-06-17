@@ -52,7 +52,7 @@ public class Problem169 {
 		}
 		System.out.println(Arrays.toString(pows));
 		
-		for (int nd = 1; nd < 300; nd++) {
+		for (int nd = 10000000; nd < 10000001; nd++) {
 			n = BigDecimal.valueOf(nd).toBigInteger();
 			String bits = n.toString(2);
 
@@ -67,11 +67,10 @@ public class Problem169 {
 					base.add(i);
 				}
 			}
-
-			for (Integer i : base) {
-				System.out.print(" + 2^" + i + " (" + pows[i] + ")");
-			}
-			System.out.println();
+//			for (Integer i : base) {
+//				System.out.print(" + 2^" + i + " (" + pows[i] + ")");
+//			}
+//			System.out.println();
 			ArrayList<String> bases = splitToBases(bits);
 			
 			EquationBI e = new EquationBI(n, pows);
@@ -79,7 +78,7 @@ public class Problem169 {
 //				e.setXi(bit.length() - 1, BigInteger.ONE);
 //			}
 //			e.saveBase();
-
+			int j2 = 0;
 			for (int j = 0; j < 10000; j++) {
 				try {
 //					if (j % 1 == 0) {
@@ -91,10 +90,15 @@ public class Problem169 {
 					// //}
 				} catch (Exception e1) {
 					System.out.println("j = " + j);
+					j2 = j;
 					// e1.printStackTrace();
 					break;
 				}
 			}
+//			if (j2 == 5) {
+//				System.out.println(n + "_2 = " + new StringBuilder(n.toString(2)));
+////				System.out.println(n + "_3 = " + new StringBuilder(n.toString(3)));
+//			}
 		}
 	}
 	
