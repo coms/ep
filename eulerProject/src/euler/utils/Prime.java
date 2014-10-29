@@ -23,6 +23,13 @@ public class Prime {
 		lastPrime = n;
 		return lastPrime;
 	}
+	
+	public static void skipPrimesTo(long n) {
+		Prime.resetPrimeSequnce();
+		while (Prime.nextPrime() < n){
+			
+		}
+	}
 
 	public static boolean isPrime(long n) {
 		List<Long> divs = DivisorsHelper.divisors(n);
