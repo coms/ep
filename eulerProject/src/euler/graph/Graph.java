@@ -8,17 +8,61 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Graph {
 
-	private List<Node> nodes;
+	private List<Node> nodes = new ArrayList<Node>();
 	
 	public Graph(String filename) {
-		Node startNode = new Node(1);
+		Node startNode = new Node(0);
 		long[][] a = loadFileIntoArray(filename);
-		System.out.println(Arrays.toString(a));
+		System.out.println(Arrays.deepToString(a));
+		
+		nodes.add(startNode);
+		for (int i = 1; i <= ((a.length) * (a[0].length)); i++) {
+			nodes.add(new Node(i));
+		}
+		Node endNode = new Node(999999); 
+		nodes.add(endNode);
+		
+		int mi = a.length;
+		int mj = a[0].length;
+		
+		for (int i = 0; i < mi; i++) {
+			for (int j = 0; j < mj; j++) {
+				// create right link
+				int srcNodeIndex = j == 0? 0 : i*mi + j;
+				int dstNodeIndex = j == 0? i*mi + 1 : i*mi + j + 1;
+				Node srcNode = nodes.get(srcNodeIndex);
+				Node dstNode = nodes.get(dstNodeIndex);
+				Link l = new Link(a[i][j], srcNode, dstNode);
+				srcNode.addLink(l); 
+				// create down link
+				if ((i < mi-1) && (srcNodeIndex > 0)) {
+					dstNodeIndex = j == 0? i*mi + 1 : (i+1)*mi + j;
+					dstNode = nodes.get(dstNodeIndex);
+					l = new Link(a[i+1][j-1], srcNode, dstNode);
+					srcNode.addLink(l);
+				}
+				// create up link
+				if ((i > 0) && (srcNodeIndex > 0)) {
+					dstNodeIndex = j == 0? i*mi + 1 : (i-1)*mi + j;
+					dstNode = nodes.get(dstNodeIndex);
+					l = new Link(a[i-1][j-1], srcNode, dstNode);
+					srcNode.addLink(l);
+				}
+				// create finish links
+				if (j == mj) {
+					dstNode = nodes.get(nodes.size() - 1);
+					l = new Link(0, srcNode, dstNode);
+					srcNode.addLink(l);
+				}
+			}
+		}
+		System.out.println("Generating ending.");
 	}
 	
 	private long[][] loadFileIntoArray(String filename) {

@@ -1,5 +1,6 @@
 package euler.graph;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Node {
@@ -8,7 +9,7 @@ public class Node {
 	private long sumWeight;
 	private boolean marked = false;
 	
-	private List<Link> outboundLinks;
+	private List<Link> outboundLinks = new ArrayList<Link>();
 
 	public Node(long id) {
 		super();
@@ -47,5 +48,25 @@ public class Node {
 	public boolean isMarked() {
 		return marked;
 	}
-	
+
+	public void addLink(Link l) {
+		outboundLinks.add(l);
+	}
+
+	@Override
+	public String toString() {
+		final int maxLen = 10;
+		StringBuilder builder = new StringBuilder();
+		builder.append("Node [id=");
+		builder.append(id);
+		builder.append(", sumWeight=");
+		builder.append(sumWeight);
+		builder.append(", marked=");
+		builder.append(marked);
+//		builder.append(", outboundLinks=");
+//		builder.append(outboundLinks != null ? outboundLinks.subList(0,
+//				Math.min(outboundLinks.size(), maxLen)) : null);
+		builder.append("]");
+		return builder.toString();
+	}
 }

@@ -27,5 +27,19 @@ public class Link {
 		this.dstNode = dstNode;
 		this.isDirected = isDirected;
 	}
-	
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Link [weight=");
+		builder.append(weight);
+		builder.append(", srcNode=");
+		builder.append(srcNode);
+		builder.append(", dstNode=");
+		builder.append(dstNode);
+		builder.append(", isDirected=");
+		builder.append(isDirected);
+		builder.append("]");
+		return builder.toString();
+	}
 }
