@@ -106,7 +106,8 @@ public class Problem61 {
 											for (Triplet<Integer, Integer, Integer> i5 : l) {
 												if (last2digits((Integer) i4.getValue0()) == first2digits((Integer) i5.getValue0())
 														&& last2digits((Integer) i5.getValue0()) == first2digits((Integer) i0.getValue0())
-														&& checkBases(i0, i1, i2, i3, i4, i5) && i0.getValue1() == 3) {
+														//&& checkBases(i0, i1, i2, i3, i4, i5) && i0.getValue1() == 3) {
+														&& checkBases(i0, i1, i2, i3, i4, i5)) {
 													System.out.println("i0 = " + i0);
 													System.out.println("i1 = " + i1);
 													System.out.println("i2 = " + i2);
