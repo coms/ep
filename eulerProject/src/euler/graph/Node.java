@@ -14,7 +14,7 @@ public class Node {
 	public Node(long id) {
 		super();
 		this.id = id;
-		this.setSumWeight(0);
+		this.setSumWeight(Long.MAX_VALUE);
 		this.setMarked(false);
 	}
 
@@ -51,6 +51,10 @@ public class Node {
 
 	public void addLink(Link l) {
 		outboundLinks.add(l);
+	}
+	
+	public long getId() {
+		return this.id;
 	}
 
 	@Override

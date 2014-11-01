@@ -28,6 +28,22 @@ public class Link {
 		this.isDirected = isDirected;
 	}
 
+	public long getWeight() {
+		return weight;
+	}
+
+	public Node getSrcNode() {
+		return srcNode;
+	}
+
+	public Node getDstNode() {
+		return dstNode;
+	}
+
+	public boolean isDirected() {
+		return isDirected;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

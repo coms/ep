@@ -10,11 +10,34 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
 
 public class Graph {
 
 	private List<Node> nodes = new ArrayList<Node>();
+	private Deque<Node> processingQueue = new LinkedList<Node>();
+	
+	/**
+	 * Return null if node is not found.
+	 * @param id
+	 * @return
+	 */
+	public Node getNodeById(long id) {
+		for (Node n : nodes) {
+			if (n.getId() == id) {
+				return n;
+			}
+		}
+		return null;
+	}
 	
 	public Graph(String filename) {
 		Node startNode = new Node(0);
@@ -32,14 +55,17 @@ public class Graph {
 		int mj = a[0].length;
 		
 		for (int i = 0; i < mi; i++) {
-			for (int j = 0; j < mj; j++) {
-				// create right link
+			for (int j = 0; j <= mj; j++) {
 				int srcNodeIndex = j == 0? 0 : i*mi + j;
 				int dstNodeIndex = j == 0? i*mi + 1 : i*mi + j + 1;
 				Node srcNode = nodes.get(srcNodeIndex);
 				Node dstNode = nodes.get(dstNodeIndex);
-				Link l = new Link(a[i][j], srcNode, dstNode);
-				srcNode.addLink(l); 
+				Link l;
+				// create right link
+				if (j < mj) {
+					l = new Link(a[i][j], srcNode, dstNode);
+					srcNode.addLink(l);
+				}
 				// create down link
 				if ((i < mi-1) && (srcNodeIndex > 0)) {
 					dstNodeIndex = j == 0? i*mi + 1 : (i+1)*mi + j;
@@ -62,6 +88,7 @@ public class Graph {
 				}
 			}
 		}
+//		System.out.println(this);
 		System.out.println("Generating ending.");
 	}
 	
@@ -145,6 +172,150 @@ public class Graph {
 			}
 		}
 		return 0;
+	}
+	
+	public List<Node> shortestRouteDeijkstra(long startNodeId, long endNodeId) {
+		Node startNode = getNodeById(startNodeId);
+		Node endNode = getNodeById(endNodeId);
+		List<Node> retval = new LinkedList<Node>();
+		startNode.setSumWeight(0);
+		retval.add(startNode);		
+		Node prevNode = startNode;
+		Node nextNode = startNode;
+		long id = 1;
+		while (!isAllNodesMarked() && (prevNode != null)) {
+			visitNode(prevNode);
+//			prevNode = processingQueue.pollFirst();
+//			if (prevNode == null) {
+				prevNode = findNextNode(prevNode);
+//			}
+		}
+		return retval;
+	}
+	
+	private boolean isAllNodesMarked() {
+		for (Node n : nodes) {
+			if (!n.isMarked()) {
+				return false;
+			}
+		} 
+		return true;
+		
+	}
+	
+	private void visitNode(Node node) {
+		System.out.println("visiting node : " + node);
+		for (Link l : node.getOutboundLinks()) {
+			Node n = l.getDstNode();
+			System.out.println("\tcheckin node : " + n);
+			if (!n.isMarked()) {
+				long newWeight = node.getSumWeight() + l.getWeight();
+				System.out.println("\tsuggested wight : " + newWeight);
+				if (newWeight < n.getSumWeight()) {
+					System.out.println("\t\treplace weight on node " + n + " to " + newWeight);					
+					n.setSumWeight(newWeight);
+				}
+//				processingQueue.offerLast(n);
+			}
+		}
+		node.setMarked(true);
+	}
+	
+	private Node findNextNode(Node node) {
+		Node nearestNode = null;
+		long path = Long.MAX_VALUE;
+		for (Link l : node.getOutboundLinks()) {
+			if ((!l.getDstNode().isMarked()) && (l.getDstNode().getSumWeight() < path)) {
+//			if (!l.getDstNode().isMarked()) {				
+				nearestNode = l.getDstNode();
+				path = l.getDstNode().getSumWeight();
+			}
+		}
+		return nearestNode;
+	}
+	
+	/**
+	 * Shortest path from 0 to 999999.
+	 * 
+	 * @return
+	 */
+	public List<Node> shortestRouteDeijkstra() {
+		return shortestRouteDeijkstra(0, 999999);
+	}
+	
+	/**
+	 * Shortest path from 0 to 999999.
+	 * 
+	 * @return
+	 */
+	public List<Node> shortestRouteAStar() {
+		return shortestRouteAStar(0, 999999);
+	}
+
+	public List<Node> shortestRouteAStar(long startNodeId, long endNodeId) {
+		List<Node> retval = new LinkedList<Node>();
+		Set<Node> closedSet = new HashSet<Node>();
+		Set<Node> openSet = new HashSet<Node>();
+		Node startNode = getNodeById(startNodeId);
+		openSet.add(startNode);
+		Map pathMap = new HashMap();
+		startNode.setSumWeight(0);
+		while(!openSet.isEmpty()) {
+			Node n = nodeWithMinimumWeight(openSet);
+			if (n.getId() == endNodeId) {
+				return retval;
+			}
+			openSet.remove(n);
+			closedSet.add(n);
+			for(Link l : n.getOutboundLinks()) {
+				Node neightbor  = l.getDstNode();
+				if (!closedSet.contains(neightbor)) {
+					long score = n.getSumWeight() + l.getWeight();
+					boolean isBetter = false;
+					if (!openSet.contains(neightbor)) {
+						openSet.add(neightbor);
+						isBetter = true;
+					} else {
+						if (score < neightbor.getSumWeight()) {
+							isBetter = true;
+						} else {
+							isBetter = false;
+						}
+					}
+					if (isBetter) {
+						pathMap.put(neightbor, n);
+						neightbor.setSumWeight(score);
+					}
+				}
+			}
+		}
+		return retval;
+	}
+
+	private Node nodeWithMinimumWeight(Set<Node> openSet) {
+		Node minimumNode = null;
+		long path = Long.MAX_VALUE;
+		for (Node n : openSet) {
+			if (n.getSumWeight() < path) {
+				minimumNode = n;
+				path = n.getSumWeight();
+			}
+		}
+		return minimumNode;
+	}
+	
+	@Override
+	public String toString() {
+		String header = "Graph [nodesCount : " + nodes.size() + "]\n";
+		StringBuilder sb = new StringBuilder();
+		for (Node node : nodes) {
+			sb.append(node.getId()).append("{").append(node.getSumWeight()).append("} : ");
+			for (Link linkToLinkedNode : node.getOutboundLinks()) {
+				sb.append(linkToLinkedNode.getDstNode().getId()).append("[").append(linkToLinkedNode.getWeight()).append("] ");
+			}
+			sb.append("\n");
+		}
+		return header + sb.toString();
 	}
 	
 }

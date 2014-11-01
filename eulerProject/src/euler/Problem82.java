@@ -37,7 +37,10 @@ public class Problem82 {
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
 	
 	public static void main(String[] args) {
-		Graph g = new Graph("./data/p082_matrix_small.txt");
+//		Graph g = new Graph("./data/p082_matrix_small.txt");
+		Graph g = new Graph("./data/p082_matrix.txt");
+		g.shortestRouteAStar();
+		System.out.println(g);
 	}
 	
 }
