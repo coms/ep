@@ -6,7 +6,19 @@ public class Link {
 	private Node srcNode;
 	private Node dstNode;
 	private boolean isDirected = true;
-	
+
+	/**
+	 * Directional link
+	 * @param weight
+	 * @param srcNode
+	 * @param dstNode
+	 */
+	protected Link(long weight, Node dstNode) {
+		super();
+		this.weight = weight;
+		this.dstNode = dstNode;
+	}
+
 	/**
 	 * Directional link
 	 * @param weight

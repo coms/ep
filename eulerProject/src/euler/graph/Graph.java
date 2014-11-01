@@ -23,7 +23,6 @@ import java.util.Set;
 public class Graph {
 
 	private List<Node> nodes = new ArrayList<Node>();
-	private Deque<Node> processingQueue = new LinkedList<Node>();
 	
 	/**
 	 * Return null if node is not found.
@@ -37,6 +36,66 @@ public class Graph {
 			}
 		}
 		return null;
+	}
+	
+	public Graph(String filename, boolean isProblem83) {
+		Node startNode = new Node(0);
+		long[][] a = loadFileIntoArray(filename);
+		System.out.println(Arrays.deepToString(a));
+		
+		nodes.add(startNode);
+		for (int i = 1; i <= ((a.length) * (a[0].length)); i++) {
+			nodes.add(new Node(i));
+		}
+		Node endNode = new Node(999999); 
+		nodes.add(endNode);
+
+		int mi = a.length;
+		int mj = a[0].length;
+
+		// start node link
+		startNode.addLink(new Link(a[0][0], startNode, nodes.get(1)));
+		
+		// end node link
+		nodes.get(nodes.size() - 2).addLink(new Link(a[mi-1][mj-1], nodes.get(nodes.size() - 2), endNode));
+		
+
+		for (int i = 0; i < mi; i++) {
+			for (int j = 0; j < mj; j++) {
+				// create right link
+				int srcNodeIndex = i*mi + j + 1;
+				Node srcNode = nodes.get(srcNodeIndex);
+				if (j < mj-1) {
+					int dstNodeIndex = i*mi + j + 2;
+					Node dstNode = nodes.get(dstNodeIndex);
+					Link l = new Link(a[i][j+1], srcNode, dstNode);
+					srcNode.addLink(l);
+				}
+				// create left link
+				if (j > 0) {
+					int dstNodeIndex = i*mi + j;
+					Node dstNode = nodes.get(dstNodeIndex);
+					Link l = new Link(a[i][j-1], srcNode, dstNode);
+					srcNode.addLink(l);
+				}
+				// create down link
+				if (i < mi-1) {
+					int dstNodeIndex = (i+1)*mi + j + 1;
+					Node dstNode = nodes.get(dstNodeIndex);
+					Link l = new Link(a[i+1][j], srcNode, dstNode);
+					srcNode.addLink(l);
+				}
+				// create up link
+				if (i > 0) {
+					int dstNodeIndex = (i-1)*mi + j + 1;
+					Node dstNode = nodes.get(dstNodeIndex);
+					Link l = new Link(a[i-1][j], srcNode, dstNode);
+					srcNode.addLink(l);
+				}
+			}
+		}
+//		System.out.println(this);
+		System.out.println("Generating ending.");
 	}
 	
 	public Graph(String filename) {
