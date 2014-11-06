@@ -38,6 +38,17 @@ public class PowHelper {
 		}
 		return cubicCache.containsKey(n);
 	}
+	
+	public static long pow(long n, long pow) {
+		if (pow == 0) {
+			return 1;
+		}
+		long retval = n;
+		for (long i = 2; i <= pow; i++) {
+			retval *= n;
+		}
+		return retval;
+	}
 
 	
 }
