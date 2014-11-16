@@ -2,6 +2,7 @@ package euler.utils;
 
 import java.math.BigInteger;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class DigitUtil {
 
@@ -156,5 +157,41 @@ public class DigitUtil {
 		sb.reverse();
 		return s.equals(sb.toString());
 	}
-
+	
+	public static boolean isRepeatableDigits(long n) {
+		String s = Long.toString(n);
+		char[] chars = s.toCharArray();
+		HashMap<Character, Integer> cnt = new HashMap<Character, Integer>();		
+		for (Character c : chars) {
+			if (cnt.get(c) == null) {
+				cnt.put(c, 1);				
+			} else {
+				return true; 
+			}
+			
+		}
+		return false;
+	}
+	
+	public static int sumOfDigits(long n) {
+		int sum = 0;
+		while (n != 0) {
+			sum += n % 10;
+			n /= 10;
+		}
+		return sum;
+	}
+	
+	public static int multOfDigits(long n) {
+		int sum = 1;
+		long a = 0;
+		while (n != 0) {
+			a = n % 10;
+			if (a != 0) {
+				sum *= a;
+			}
+			n /= 10;
+		}
+		return sum;
+	}
 }
