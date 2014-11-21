@@ -182,6 +182,15 @@ public class DigitUtil {
 		return sum;
 	}
 	
+	public static int sumOfDigits(BigInteger n) {
+		int sum = 0;
+		while (!n.equals(BigInteger.ZERO)) {
+			sum += n.remainder(BigInteger.TEN).intValue();
+			n = n.divide(BigInteger.TEN);
+		}
+		return sum;
+	}
+	
 	public static int multOfDigits(long n) {
 		int sum = 1;
 		long a = 0;
@@ -194,4 +203,17 @@ public class DigitUtil {
 		}
 		return sum;
 	}
+	
+	public static long reverse(long n) {
+		String s = String.valueOf(n);
+		StringBuilder sb = new StringBuilder(s);
+		return Long.valueOf(sb.reverse().toString());
+	}
+	
+	public static BigInteger reverse(BigInteger n) {
+		String s = n.toString();
+		StringBuilder sb = new StringBuilder(s);
+		return new BigInteger(sb.reverse().toString());
+	}
+
 }
