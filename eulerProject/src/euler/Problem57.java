@@ -22,17 +22,28 @@ import euler.utils.Prime;
 
 /**
 * Problem 57
-* sqrt(2) ?
+* sqrt(2) =
  **/
 public class Problem57 {
 
 	public static void main(String[] args) {
-		long num = 3;
-		long denum = 2;
-		Fraction f = new Fraction(3,2);
-		System.out.println(f);
-		long nextDenum = 1*denum + num;
-		long nextNum = 1*denum + num;
+		int sum = 0;
+		BigInteger n_1 = BigInteger.valueOf(3);
+		BigInteger d_1 = BigInteger.valueOf(2);
+		BigInteger n = BigInteger.ZERO;
+		BigInteger d = BigInteger.ZERO;
+		for (int i = 2; i <= 1000; i++) {
+			d = d_1.add(n_1);
+			n = d_1.add(d);
+//			System.out.println(i + ":" + n + "/" + d );
+			d_1 = d;
+			n_1 = n;
+			if (n.toString().length() > d.toString().length()) {
+				System.out.println("i=" + i);
+				sum++;
+			}
+		}
+		System.out.println("sum = " + sum);
 	}
 	
 }
