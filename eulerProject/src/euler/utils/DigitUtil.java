@@ -2,7 +2,10 @@ package euler.utils;
 
 import java.math.BigInteger;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 public class DigitUtil {
 
@@ -172,6 +175,24 @@ public class DigitUtil {
 		}
 		return false;
 	}
+	
+	public static int maxNumsOfDigsRepeats(long n) {
+		String s = Long.toString(n);
+		int maxN = 0;
+		char[] chars = s.toCharArray();
+		HashMap<Character, Integer> cnt = new HashMap<Character, Integer>();		
+		for (Character c : chars) {
+			if (cnt.get(c) == null) {
+				cnt.put(c, 1);
+				maxN = Math.max(maxN, 1);
+			} else {
+				cnt.put(c, cnt.get(c) + 1);
+				maxN = Math.max(maxN, cnt.get(c));
+			}
+		}
+		return maxN;
+	}
+
 	
 	public static int sumOfDigits(long n) {
 		int sum = 0;
