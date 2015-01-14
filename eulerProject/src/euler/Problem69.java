@@ -38,11 +38,37 @@ public class Problem69 {
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
 	
 	public static void main(String[] args) {
-		for (long n = 2; n <= 10; n++) {
-			System.out.println(n);
-			List<Long> divs = DivisorsHelper.divisors(n);
-			long primes = n - divs.size() + 1;
-			System.out.println(divs + " primes = " + primes);
+		long s = Prime.nextPrime();
+		do {
+			s *= Prime.nextPrime();
+			System.out.println(s);
+		} while (s <= 100000);
+	}
+	
+	public static void main2(String[] args) {
+		double maxNPhi = 0d;
+		for (long n = 2; n <= 10000; n++) {
+			long primes = 1;
+			for (long m = 2; m < n; m++) {
+				if (n % m != 0) { 
+					boolean add = true;
+					for (long k = 2; k <= m; k++) {
+						if ((m % k == 0) && (n % k == 0)) {
+							add = false;;
+						}
+					}
+					if (add) {
+						primes++;
+//						System.out.println("\t" + m + " - ");
+					}
+				}
+			}
+			double nPhi = (double) n / primes;
+			if (nPhi > maxNPhi) {				
+				maxNPhi = nPhi;
+				System.out.println(n + "\t" + primes + " n/phi = " + nPhi);
+			}
 		}
 	}
+
 }
